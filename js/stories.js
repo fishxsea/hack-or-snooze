@@ -12,8 +12,8 @@ async function getAndShowStoriesOnStart() {
   putStoriesOnPage();
 }
 
-async function storySubmission(evt) {
-  evt.preventDefault();
+async function storySubmission(e) {
+  e.preventDefault();
 
   const $formTitle = $('#title').val();
   const $formAuthor = $('#author').val();
@@ -45,7 +45,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <span id="heart">♥</span>
+      <span class="heart">♥</span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -71,3 +71,67 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+// checks for heart click
+$allStoriesList.on('click', '.heart', function () {
+  const article = $(this).parent()[0];
+  const articleId = article.id;
+  const userFavorites = currentUser.favorites;
+  $(this).toggleClass('favorited');
+  localStorage.setItem('favorites', userFavorites);
+
+  // Adds and removes favorites
+  // Checks if most recently hearted story has the class of favorited
+  // If not it adds it to favorites
+  if ($(this).hasClass('favorited')) {
+    for (let story of storyList.stories) {
+      if (story.storyId === articleId) {
+        // adds the story to favorite array of currentUser object
+        currentUser.addFavorite(story);
+      }
+    }
+  } else {
+    // Checks if most recently unhearted story has the class of favorited
+    // If it does, it removes it from favorites
+
+    for (let story of userFavorites) {
+      if (story.storyId === articleId) {
+        // removes the story from favorite array of currentUser object
+        userFavorites.splice(userFavorites.indexOf(story), 1);
+      }
+    }
+  }
+
+  // check if the favorites list has favorites in it.
+  // if it does then append them to favorites list in html and clear favorites
+  // html out
+  $favoritedStories.empty();
+  if (userFavorites.length !== 0) {
+    for (let story of userFavorites) {
+      $favoritedStories.append(generateStoryMarkup(story));
+    }
+  }
+});
+
+// remove favorites
+$favoritedStories.on('click', '.heart', function () {
+  const article = $(this).parent()[0];
+  const articleId = article.id;
+  const userFavorites = currentUser.favorites;
+
+  // loops through all stories and removes red heart and favorited story
+  $allStoriesList.find('li').each(function () {
+    const id = $(this).attr('id');
+    const heart = $(this).find('span');
+    if (id === articleId) {
+      heart.toggleClass('favorited');
+      article.remove();
+      for (let story of userFavorites) {
+        if (story.storyId === articleId) {
+          // removes the story from favorite array of currentUser object
+          userFavorites.splice(userFavorites.indexOf(story), 1);
+        }
+      }
+    }
+  });
+});

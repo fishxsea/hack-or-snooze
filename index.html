@@ -36,11 +36,11 @@
       <div class="navbar-brand">
         <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
       </div>
-      |
+
       <a class="nav-link" href="#" id="nav-submit">submit</a>
-      |
+
       <a class="nav-link" href="#" id="nav-favorites">favorites</a>
-      |
+
       <div class="nav-right">
         <a class="nav-link" href="#" id="nav-login">login/signup</a>
         <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -64,6 +64,8 @@
             required
           />
         </div>
+
+        <!-- stores all favorited stories -->
 
         <div>
           <label for="author">Author</label>
@@ -89,6 +91,11 @@
 
         <button type="submit" id="submission">Submit</button>
       </form>
+
+      <div id="favorites" class="hidden">
+        <h2>Favorite Stories</h2>
+        <ol id="favorite-stories" class="hidden"></ol>
+      </div>
       <!-- loading message (removed by JS after stories loaded) -->
       <div id="stories-loading-msg">Loading&hellip;</div>
 

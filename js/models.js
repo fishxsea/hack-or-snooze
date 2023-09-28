@@ -202,8 +202,7 @@ class User {
     }
   }
 
-  async addFavorite(story) {
-    // Not implemented yet
-    this.favorites.push(story);
+  addFavorite(story) {
+    this.favorites.unshift(story);
   }
 }

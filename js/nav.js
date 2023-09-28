@@ -41,6 +41,12 @@ function navSubmitClick(evt) {
 
 $navSubmit.on('click', navSubmitClick);
 
+function navFavoritesClick() {
+  hideShow($favoritedStories);
+  hideShow($favoriteHeader);
+}
+
+$navFavorites.on('click', navFavoritesClick);
 /** When a user first logins in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {

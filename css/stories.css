@@ -37,7 +37,21 @@
   display: block;
 }
 
-#heart {
+.heart {
   color: #939393;
   cursor: pointer;
+  user-select: none;
+}
+
+.favorited {
+  color: red;
+  transition: 0.2s;
+}
+
+#favorites h2 {
+  text-align: center;
+}
+
+#favorite-stories {
+  color: rgb(180, 84, 20);
 }
