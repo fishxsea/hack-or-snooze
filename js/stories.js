@@ -78,7 +78,6 @@ $allStoriesList.on('click', '.heart', function () {
   const articleId = article.id;
   const userFavorites = currentUser.favorites;
   $(this).toggleClass('favorited');
-  localStorage.setItem('favorites', userFavorites);
 
   // Adds and removes favorites
   // Checks if most recently hearted story has the class of favorited
